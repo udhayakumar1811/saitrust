@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --ink: #0c0c0d;
+  --ink-soft: #161615;
+  --ink-2: #201f1c;
+  --gold: #c99b3f;
+  --gold-light: #e8c876;
+  --gold-pale: #f6e6bd;
+  --cream: #fbf6ec;
+  --cream-2: #f4ecda;
+  --paper: #ffffff;
+  --text-dark: #1c1a15;
+  --text-muted: #6b6558;
+  --text-on-ink: #f3ede0;
+  --text-on-ink-muted: #b9b2a0;
+  --line: rgba(201, 155, 63, 0.25);
+
+  /* Deep burgundy/maroon lifted from the SAI logo — supporting brand color */
+  --maroon: #5c0f18;
+  --maroon-light: #7a1622;
+  --maroon-dark: #3a0910;
+  --grad-maroon: linear-gradient(135deg, #7a1622 0%, #5c0f18 55%, #3a0910 100%);
+
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+
+  --shadow-gold: 0 10px 30px -8px rgba(201, 155, 63, 0.45);
+  --shadow-soft: 0 18px 44px -18px rgba(12, 12, 13, 0.35);
+
+  --font-display: 'Playfair Display', 'Georgia', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --grad-gold: linear-gradient(135deg, #efd48f 0%, #c99b3f 48%, #8f6a1f 100%);
+  --grad-ink: linear-gradient(180deg, #141312 0%, #0a0a0a 100%);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  /* IMPORTANT: overflow-x must NOT be set here. `body` is a scrolling
+     ancestor of the sticky <Navbar>, and setting any overflow value
+     (including overflow-x alone) on a position:sticky element's ancestor
+     breaks sticky positioning — this is a well-known iOS/mobile Safari trap
+     where the navbar simply scrolls away instead of staying fixed, even
+     though it looks fine on desktop Chrome. Horizontal-scroll protection is
+     handled per-section instead (see .section, .container, etc. below and
+     in shared.css), never on body/html/#root. */
+}
+
+#root {
+  width: 100%;
+}
+
+main {
+  overflow-x: hidden;
+  /* Safe here: <main> is a SIBLING of the sticky <Navbar> in App.jsx, not
+     an ancestor, so this can't break position:sticky the way body/#root
+     overflow rules do (see the note in body{} above). */
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  margin: 0;
+  line-height: 1.12;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+p { margin: 0; }
+
+a { color: inherit; text-decoration: none; }
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+img { max-width: 100%; display: block; }
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 1.5px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.section {
+  padding: 84px 0;
+}
+
+.section--tight { padding: 56px 0; }
+
+.section-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 48px;
+}
+
+.section-head h2 {
+  font-size: clamp(28px, 3.6vw, 40px);
+  margin: 10px 0 12px;
+}
+
+.section-head p {
+  color: var(--text-muted);
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+  white-space: nowrap;
+}
+
+.btn-gold {
+  background: var(--grad-gold);
+  color: #241a05;
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px -10px rgba(201, 155, 63, 0.6);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-on-ink);
+  border: 1.5px solid rgba(243, 237, 224, 0.35);
+}
+
+.btn-ghost:hover {
+  border-color: var(--gold-light);
+  color: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+.btn-outline-dark {
+  background: transparent;
+  color: var(--text-dark);
+  border: 1.5px solid rgba(28, 26, 21, 0.25);
+}
+
+.btn-outline-dark:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn-sm { padding: 10px 20px; font-size: 12.5px; }
+
+.btn-block { width: 100%; }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--cream-2);
+  color: var(--gold);
+  border: 1px solid var(--line);
+}
+
+.gold-text {
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.divider-gold {
+  width: 64px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--grad-gold);
+  margin: 0 auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+@media (max-width: 860px) {
+  .section { padding: 56px 0; }
+  .container { padding: 0 18px; }
+}

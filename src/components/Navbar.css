@@ -1,0 +1,201 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201, 155, 63, 0.16);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar--scrolled {
+  box-shadow: 0 12px 30px -18px rgba(0, 0, 0, 0.6);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  height: 72px;
+  min-width: 0;
+}
+
+.navbar__brand {
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.navbar__link {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text-on-ink-muted);
+  position: relative;
+  padding: 6px 0;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -2px;
+  height: 2px;
+  background: var(--grad-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.navbar__link:hover { color: var(--text-on-ink); }
+.navbar__link:hover::after { transform: scaleX(1); }
+
+.navbar__link--active {
+  color: var(--gold-light);
+}
+.navbar__link--active::after { transform: scaleX(1); }
+
+/* ---------------- "More" dropdown ---------------- */
+.navbar__more {
+  position: relative;
+}
+.navbar__more-btn svg {
+  transition: transform 0.2s ease;
+}
+.navbar__more-btn[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+.navbar__dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  min-width: 190px;
+  background: #121213;
+  border: 1px solid rgba(201, 155, 63, 0.22);
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 20;
+}
+.navbar__dropdown--open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.navbar__dropdown-link {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-on-ink-muted);
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.navbar__dropdown-link:hover {
+  background: rgba(201, 155, 63, 0.1);
+  color: var(--text-on-ink);
+}
+.navbar__dropdown-link--active {
+  color: var(--gold-light);
+}
+
+.navbar__cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.navbar__login-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--gold-light);
+  white-space: nowrap;
+  border: 1.5px solid rgba(232, 200, 118, 0.5);
+  border-radius: 999px;
+  background: rgba(201, 155, 63, 0.08);
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease,
+    transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+.navbar__login-btn:hover,
+.navbar__login-btn:focus-visible {
+  background: var(--grad-gold);
+  border-color: transparent;
+  color: #241a05;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px -10px rgba(201, 155, 63, 0.65);
+}
+
+.navbar__login-btn:active {
+  transform: translateY(0);
+}
+
+.navbar__burger {
+  display: none;
+  padding: 6px;
+  flex-shrink: 0;
+}
+
+.navbar__mobile {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .navbar__links, .navbar__cta { display: none; }
+  .navbar__burger { display: inline-flex; }
+
+  .navbar__mobile {
+    /* This was the actual bug: display:none is set above for all screen
+       widths and was never switched back on here — so toggling .open just
+       animated max-height on an element the browser was still hiding
+       completely. Setting it visible here (the max-height/overflow pair
+       below still does the collapse/expand animation) is the fix. */
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.32s ease;
+    background: #0a0a0a;
+    border-top: 1px solid rgba(201, 155, 63, 0.12);
+  }
+  .navbar__mobile--open {
+    max-height: 720px;
+    overflow-y: auto;
+  }
+  .navbar__mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px 24px 24px;
+  }
+  .navbar__mobile-link {
+    padding: 12px 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-on-ink-muted);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .navbar__mobile-link--active { color: var(--gold-light); }
+}
